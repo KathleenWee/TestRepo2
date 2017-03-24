@@ -3,8 +3,7 @@ title: Git/GitHub Hands-On
 output: pdf_document
 fontsize: 12pt
 ---
-
-We'll work in pairs: **User A** and **User B**
+Do the following:
 
 ## 1. User A
 
