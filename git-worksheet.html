@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Git/GitHub Hands-On</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <div id="ubc-wordmark" onclick="window.location.assign('http://asda.stat.ubc.ca/')">
+                <div class="ubc-name">The University of British Columbia</div>
+                <div>Applied Statistics and Data Science Group</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Git/GitHub Hands-On</h1>
+
+</div>
+
+
+<p>We’ll work in pairs: <strong>User A</strong> and <strong>User B</strong></p>
+<div id="user-a" class="section level2">
+<h2>1. User A</h2>
+<ul>
+<li><p>Go to your GitHub account (let’s assume it’s <code>https://github.com/userA</code>) and create a new repository (let’s call it “TestRepo”)</p></li>
+<li><p>In the project you’ve been working so far, connect your local repository to GitHub. In shell, run:</p>
+<pre><code>git remote add origin https://github.com/userA/TestRepo</code></pre></li>
+<li><p>Push your local repository to GitHub</p>
+<pre><code>git push -u origin master</code></pre></li>
+</ul>
+</div>
+<div id="user-b" class="section level2">
+<h2>2. User B</h2>
+<ul>
+<li><p>Log into your GitHub account (let’s assume it’s <code>https://github.com/userB</code>)</p></li>
+<li><p>Fork user A’s repository on GitHub: go to <code>https://github.com/userA/TestRepo</code> and click the “Fork” button.</p></li>
+<li><p>Clone <em>your</em> version of that repository locally:</p>
+<ol style="list-style-type: decimal">
+<li><p>in RStudio, “create a project” and choose “version control”</p></li>
+<li><p>choose “Git: clone a project from a Git repository”</p></li>
+<li><p>enter repository URL: <code>https://github.com/userB/TestRepo</code></p></li>
+</ol></li>
+<li><p>Change a file, and another file</p></li>
+<li><p>Add and commit your changes</p></li>
+<li><p>Push the changes to GitHub: click on “up arrow” in the Git tab</p></li>
+<li><p>Make a pull request:</p>
+<ul>
+<li>Go to <em>your</em> version of the repository on GitHub (<code>https://github.com/userB/TestRepo</code>)</li>
+<li>Click “Pull requests”</li>
+<li>Click “New pull request”</li>
+<li>Click “Create pull request”</li>
+<li>Optionally add a comment</li>
+<li>Click “Create pull request”</li>
+</ul></li>
+</ul>
+</div>
+<div id="user-a-1" class="section level2">
+<h2>3. User A</h2>
+<ul>
+<li><p>Connect to User B’s repository:</p>
+<pre><code>git remote add userBrepo https://github.com/userB/TestRepo</code></pre></li>
+<li><p>Fetch the changes from User B:</p>
+<pre><code>git fetch userBrepo</code></pre></li>
+<li><p>Create their version of the repository as a local branch:</p>
+<pre><code>git branch userB userBrepo/master</code></pre></li>
+<li><p>In RStudio, switch to branch “userB” and check that you like the changes</p></li>
+<li><p>Switch back to your master branch</p></li>
+<li><p>Note that the files are in the state that <em>you</em> left them.</p></li>
+<li><p>Merge their work into your master branch:</p>
+<pre><code>git merge userB</code></pre></li>
+<li><p>Push the work to GitHub.</p></li>
+<li><p>Make another change to the file; then add, commit, and push.</p></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

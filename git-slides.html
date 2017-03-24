@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Collaborative research with Git</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <div id="ubc-wordmark" onclick="window.location.assign('https://asda.stat.ubc.ca/')">
+                <div class="ubc-name">The University of British Columbia</div>
+                <div>Applied Statistics and Data Science Group</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Collaborative research with Git</h1>
+<h4 class="author"><em><p>Presented by Vincenzo Coia<br />
+Material by Davor Cubranic and Rick White<br />
+Applied Statistics and Data Science Group<br />
+UBC Statistics</p></em></h4>
+<h4 class="date"><em>April 27 2016</em></h4>
+
+</div>
+
+
+<div id="do-you-have-all-pre-requisites" class="section level2">
+<h2>Do you have all pre-requisites?</h2>
+<ul>
+<li><p>Github account</p></li>
+<li><p>Git and Bash</p></li>
+<li><p>up to date R and Rstudio</p></li>
+</ul>
+<p>If not, follow the setup instructions at <a href="http://asda.stat.ubc.ca/workshops/2016-04_ECOSCOPE_topics/setup.html">asda.stat.ubc.ca/workshops/2016-04_ECOSCOPE_topics/setup.html</a></p>
+<hr />
+<p></p>
+<div class="figure">
+<img src="image/phdcomics-final.gif" alt="http://www.phdcomics.com/comics/archive.php?comicid=1531" />
+<p class="caption"><a href="http://www.phdcomics.com/comics/archive.php?comicid=1531" class="uri">http://www.phdcomics.com/comics/archive.php?comicid=1531</a></p>
+</div>
+</div>
+<div id="how-to-track-changes-to-your-files" class="section level2">
+<h2>How to track changes to your files</h2>
+<ul>
+<li><p>nothing: live in the here and now</p></li>
+<li><p>date-stamped directories/files</p></li>
+<li><p>version control tools</p></li>
+</ul>
+</div>
+<div id="automating-version-control" class="section level2">
+<h2>“Automating” version control</h2>
+<p>Version control tools:</p>
+<ul>
+<li><p>save the entire history of changes in the project</p>
+<ul>
+<li>commented, time-stamped, author identified</li>
+</ul></li>
+</ul>
+</div>
+<div id="benefits-of-version-control" class="section level2">
+<h2>Benefits of version control</h2>
+<ul>
+<li><p>easy to see what changed when, why, and by whom</p></li>
+<li><p>jump back to any point in time</p></li>
+<li><p>freedom to experiment</p>
+<ul>
+<li>try out a crazy idea</li>
+<li>can always go back to the last known good version</li>
+<li>keep working on both in parallel</li>
+</ul></li>
+<li><p>manage contributions from multiple people</p></li>
+</ul>
+</div>
+<div id="learning-goals" class="section level2">
+<h2>Learning goals</h2>
+<ul>
+<li><p>use Git version control tool in your projects</p></li>
+<li><p>collaborate more effectively with Github online service</p>
+<ul>
+<li><p>manage simultaneous/conflicting changes by various contributors</p></li>
+<li><p>use Github Issues for tracking TODOs and focus discussion</p></li>
+</ul></li>
+</ul>
+</div>
+<div id="version-control-with-git" class="section level1">
+<h1>Version control with Git</h1>
+<div id="what-is-git" class="section level2">
+<h2>What is Git?</h2>
+<ul>
+<li><p><strong>a</strong> version control system</p></li>
+<li><p>a <strong>distributed</strong> version control system</p></li>
+<li><p>originally developed to manage source code for Linux</p></li>
+</ul>
+</div>
+<div id="why-use-git-and-not-fill-in-the-blank" class="section level2">
+<h2>Why use Git and not <em>fill in the blank</em>?</h2>
+<ul>
+<li><p>it is very fast, even for projects with hundreds of files and years of history</p></li>
+<li><p>doesn’t require access to a server</p></li>
+<li><p>extremely popular, no strong reason to pick anything else (unless required)</p></li>
+</ul>
+</div>
+<div id="before-we-start" class="section level2">
+<h2>Before we start</h2>
+<p>Tell Git who you are:</p>
+<p>In RStudio, go to “Tools” -&gt; “Shell…” and enter:</p>
+<pre><code>git config --global user.name &quot;My Name&quot;
+git config --global user.email &quot;me@email.com&quot;</code></pre>
+</div>
+<div id="basic-use" class="section level2">
+<h2>Basic use</h2>
+<ul>
+<li><p>create a new project</p>
+<ul>
+<li>check “create a Git repository”</li>
+</ul></li>
+<li><p>see the “Git” tab</p>
+<ul>
+<li>shows two files</li>
+<li>status: “? ?”</li>
+</ul></li>
+<li><p>click in the “Staged” column</p></li>
+<li><p>commit</p></li>
+</ul>
+</div>
+<div id="reviewing-changes" class="section level2">
+<h2>Reviewing changes</h2>
+<ul>
+<li><p>create a file Readme.md</p></li>
+<li><p>add and commit</p></li>
+<li><p>view history tab</p></li>
+</ul>
+</div>
+<div id="terminology" class="section level2">
+<h2>Terminology</h2>
+<dl>
+<dt>Repository</dt>
+<dd>a store of contents and history of all files in a project
+</dd>
+<dt>Commit</dt>
+<dd><p>a permanent snapshot of the state of the repository at a point in time</p>
+<ul>
+<li>annotated with author, time, and comment</li>
+<li>linked with a preceding (“parent”) commit</li>
+</ul>
+</dd>
+<dt>Staging</dt>
+<dd><p>files marked for inclusion in the next commit</p>
+<ul>
+<li>as they were <em>at the time they were staged!!</em></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<ol style="list-style-type: decimal">
+<li><p>Make more changes to Readme.md</p></li>
+<li><p>Create a new file (R script or R/markdown document)</p></li>
+<li><p>Add and commit</p></li>
+</ol>
+</div>
+<div id="reviewing-the-history" class="section level2">
+<h2>Reviewing the history</h2>
+<ul>
+<li><p>switch to the Git history view (“clock” icon in the Git tab)</p></li>
+<li><p>list of commits</p></li>
+<li><p>each shows what it changed (“diff”)</p></li>
+<li><p>commit “name” (unique SHA-1 fingerprint)</p></li>
+</ul>
+</div>
+<div id="undoing-changes" class="section level2">
+<h2>Undoing changes</h2>
+<p>If you:</p>
+<ul>
+<li>change your mind about your edits</li>
+<li>accidentally delete a file</li>
+</ul>
+<p>Then:</p>
+<ul>
+<li><p>before committing:</p>
+<ul>
+<li><p>right-click in Git tab and “Revert” to throw away the changes; or</p></li>
+<li><p>in the “diff” view, click on “discard chunk” or “discard line”</p></li>
+</ul></li>
+<li><p>after committing: go back to a previous commit</p>
+<ul>
+<li>must use shell: <code>git revert</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="branching-and-merging" class="section level2">
+<h2>Branching and merging</h2>
+<ul>
+<li><p>use branches to test out new features without breaking the working code</p>
+<ul>
+<li><p>must use shell: <code>git branch branch-name</code></p></li>
+<li><p>can switch branches in RStudio’s Git tab</p></li>
+</ul></li>
+<li><p>when the work in a branch is done, merge it back into the main (“master”) branch</p>
+<ul>
+<li>must use shell: <code>git merge branch-name</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="exercise-1" class="section level2">
+<h2>Exercise</h2>
+<ul>
+<li><p>create a new branch “develop”</p></li>
+<li><p>make some changes to the project (edit, delete, or create new files)</p></li>
+<li><p>add and commit</p></li>
+<li><p>switch to the “master” branch</p></li>
+<li><p>compare project contents</p></li>
+<li><p>merge the “develop” branch</p></li>
+<li><p>what happens?</p></li>
+</ul>
+</div>
+<div id="merge-conflicts" class="section level2">
+<h2>Merge conflicts</h2>
+<p>Git tries its best to merge changes from different branches, but sometimes it fails (“merge conflict”):</p>
+<ul>
+<li><p>switch to the develop branch</p></li>
+<li><p>edit and commit</p></li>
+<li><p>switch to the master branch</p></li>
+<li><p>change the same lines and commit</p></li>
+<li><p>try to merge “develop”</p></li>
+</ul>
+</div>
+<div id="resolving-merge-conflicts" class="section level2">
+<h2>Resolving merge conflicts</h2>
+<ul>
+<li><p>boths sets of conflicting lines are preserved in the file</p>
+<ul>
+<li>look for markers <code>&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, and <code>&gt;&gt;&gt;&gt;&gt;&gt;</code></li>
+</ul></li>
+<li><p>edit the file until it looks the way you want it (removing the markers)</p></li>
+<li><p>add and commit</p></li>
+<li><p>conflict solved!!</p></li>
+</ul>
+</div>
+<div id="terminology-1" class="section level2">
+<h2>Terminology</h2>
+<dl>
+<dt>Branch</dt>
+<dd>a named sequence of commits kept separate
+</dd>
+<dt>Merge</dt>
+<dd>including changes from one branch into another
+</dd>
+<dt>Conflict</dt>
+<dd>parallel changes to same section(s) of a file that can’t be automatically merged
+</dd>
+</dl>
+</div>
+</div>
+<div id="collaboration-with-git-and-github" class="section level1">
+<h1>Collaboration with Git and Github</h1>
+<div id="what-is-github" class="section level2">
+<h2>What is Github?</h2>
+<ul>
+<li><p>service that hosts your repository online</p></li>
+<li><p>web interface for Git</p></li>
+<li><p>features to help work with contributors/collaborators</p></li>
+</ul>
+</div>
+<div id="why-use-github-and-not-file-in-the-blank" class="section level2">
+<h2>Why use Github and not <em>file in the blank</em>?</h2>
+<ul>
+<li><p>nice graphical user interface for Git</p></li>
+<li><p>provides a copy of the repository that is easily accessed by others</p></li>
+<li><p>a variety of add-ons to facilitate collaboration</p></li>
+<li><p><em>huge</em> community</p></li>
+</ul>
+</div>
+<div id="github-repository" class="section level2">
+<h2>Github repository</h2>
+<ul>
+<li><p>go to Github.com and sign-in</p></li>
+<li><p>click “Create a new repo”</p></li>
+<li><p>give it a name and description</p></li>
+<li><p>click “Create”</p></li>
+</ul>
+</div>
+<div id="fork-a-repository" class="section level2">
+<h2>Fork a repository</h2>
+<ul>
+<li><p>view someone else’s repository</p></li>
+<li><p>click “Fork”</p></li>
+<li><p>you get a copy of the repository under your account</p></li>
+</ul>
+</div>
+<div id="issues" class="section level2">
+<h2>Issues</h2>
+<ul>
+<li><p>bugs to fix</p></li>
+<li><p>features to add</p></li>
+<li><p>any “todo”</p></li>
+<li><p>mark who is responsible by “assigning”</p></li>
+<li><p>use “labels” for: milestones, type of todo, etc.</p></li>
+</ul>
+</div>
+<div id="pull-requests" class="section level2">
+<h2>Pull requests</h2>
+<ul>
+<li><p>Github tracks differences between your fork and the original repository</p></li>
+<li><p>can request that changes be included in the original</p></li>
+</ul>
+</div>
+<div id="exercise-2" class="section level2">
+<h2>Exercise</h2>
+<p>Use the handout to work through the exercise. Work in pairs.</p>
+</div>
+<div id="other-github-goodies" class="section level2">
+<h2>Other Github goodies</h2>
+<ul>
+<li><p>Wiki pages for documentation</p></li>
+<li><p>build a web site from a repo</p></li>
+<li><p>private repositories</p></li>
+<li><p>organizations</p></li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

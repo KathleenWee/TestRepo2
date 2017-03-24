@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Git/GitHub Hands-On: Part 2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <div id="ubc-wordmark" onclick="window.location.assign('http://asda.stat.ubc.ca/')">
+                <div class="ubc-name">The University of British Columbia</div>
+                <div>Applied Statistics and Data Science Group</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Git/GitHub Hands-On: Part 2</h1>
+
+</div>
+
+
+<p>Continuing where we left off…</p>
+<div id="user-b" class="section level2">
+<h2>4. User B</h2>
+<ul>
+<li><p>Add a connection to User A’s repository:</p>
+<pre><code>git remote add userArepo git://github.com/userA/TestRepo</code></pre></li>
+<li><p>Fetch User A’s latest</p>
+<pre><code>git fetch userArepo</code></pre></li>
+<li><p>Create their version of the repository as a local branch:</p>
+<pre><code>git branch userA userArepo/master</code></pre></li>
+<li><p>In RStudio, switch to branch “userB” and test things</p></li>
+<li><p>Switch back to your master branch</p></li>
+<li><p>Merge the change from User A</p>
+<pre><code>git merge userA</code></pre></li>
+<li><p>Push to GitHub</p></li>
+</ul>
+</div>
+<div id="users-a-and-b" class="section level2">
+<h2>5. Users A and B</h2>
+<ul>
+<li>Make simulateneous changes, then add, commit, and push.</li>
+</ul>
+</div>
+<div id="user-b-1" class="section level2">
+<h2>6. User B</h2>
+<ul>
+<li><p>Switch to branch “userA”</p></li>
+<li><p>Pull User A’s change from GitHub</p>
+<pre><code>git pull userArepo master</code></pre></li>
+<li><p>Go back to your master branch</p></li>
+<li><p>Merge the change from User A.</p>
+<pre><code>git merge userA</code></pre></li>
+<li><p>Fix the merge conflict; then add, commit, push.</p></li>
+<li><p>Make another pull request</p></li>
+</ul>
+</div>
+<div id="user-a" class="section level2">
+<h2>7. User A</h2>
+<ul>
+<li><p>Switch to branch “userB”</p></li>
+<li><p>Pull User B’s changes</p>
+<pre><code>git pull userBrepo master</code></pre></li>
+<li><p>Review the changes</p></li>
+<li><p>Go back to your master branch</p></li>
+<li><p>Merge their changes your master branch</p>
+<pre><code>git merge userB</code></pre></li>
+<li><p>Push back to GitHub</p></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
