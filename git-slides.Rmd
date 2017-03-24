@@ -35,6 +35,11 @@ output:
     fonttheme: professionalfonts
 ---
 
+## New slide here
+
+This is some content.
+
+
 ## Do you have all pre-requisites?
 
 - Github account
